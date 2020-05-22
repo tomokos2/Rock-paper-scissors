@@ -1,2 +1,6 @@
 # Rock-paper-scissors
-JS basics
+JS basics demonstrated through simple website.
+Play rock paper scissors through a console
+
+#### Development
+Provide frontend
