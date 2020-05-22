@@ -8,7 +8,8 @@ const INVALID = -1;
 
 // Plays the game with selected number of rounds
 function playGame(numRounds) {
-
+    numRounds = +numRounds;
+    
     let numWins = 0;
 
     // Play rounds until max rounds reached
