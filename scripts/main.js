@@ -5,8 +5,19 @@ const WIN = 1;
 const LOSE = 0;
 const INVALID = -1;
 
+// Begin game upon click
+const btn = document.querySelector('#playBtn');
+btn.addEventListener('click', (e) => {
+    // Clear the results of the previous round
+    document.querySelector("#gameScript").innerHTML = "";
+    
+    // Get the current selection
+    const menu = document.querySelector("#itemSelect");
+    let playerSelection = menu.options[menu.selectedIndex].text;
+    playGameFromButton(playerSelection);
+})
 
-// Plays the game with selected number of rounds
+// Plays the game with selected number of rounds for console
 function playGame(numRounds) {
     numRounds = +numRounds;
     
@@ -21,7 +32,7 @@ function playGame(numRounds) {
         const computerSelection = computerPlay();
 
         // Report to the player
-        console.log(sayPlays(playerSelection, computerSelection));
+        logScript(sayPlays(playerSelection, computerSelection));
 
         // Check the winner of the round
         let result = playRound(playerSelection, computerSelection);
@@ -37,6 +48,18 @@ function playGame(numRounds) {
 
 }
 
+// Plays the game with selected number of rounds for console
+function playGameFromButton(playerSelection) {
+
+    // Auto generate the computer hand
+    const computerSelection = computerPlay();
+
+    // Report to the player
+    logScript(sayPlays(playerSelection, computerSelection));
+
+    playRound(playerSelection, computerSelection);
+}
+
 // Represents one round of the game, and returns whether the player won, lost, drew, or had an invalid game
 function playRound(playerSelection = "", computerSelection) {
     // Normalize
@@ -45,7 +68,7 @@ function playRound(playerSelection = "", computerSelection) {
 
     // Check to make sure the player input was valid
     if (!isValidSelection(player)) {
-        console.log(sayInvalidSelection());
+        logScript(sayInvalidSelection());
         return INVALID;
     }
 
@@ -53,7 +76,7 @@ function playRound(playerSelection = "", computerSelection) {
 
     // Checks for a draw
     if (player === comp) {
-        console.log(sayDraw(computerSelection));
+        logScript(sayDraw(computerSelection));
         return DRAW;
     }
 
@@ -70,12 +93,12 @@ function playRound(playerSelection = "", computerSelection) {
             break;
         default :
             // This statement should not be reached
-            console.warn(sayInvalidSelection());
+            logScript(sayInvalidSelection());
             return INVALID;           
     }
 
     // Report the result of the round
-    console.log((playerWon) ? sayWin(playerSelection, computerSelection) : sayLose(playerSelection, computerSelection));
+    logScript((playerWon) ? sayWin(playerSelection, computerSelection) : sayLose(playerSelection, computerSelection));
     
     return (playerWon) ? WIN : LOSE;
 }
@@ -99,6 +122,13 @@ function isValidSelection(playerSelection) {
     return isValid;
 }
 
+function logScript(script) {
+    const container = document.querySelector('#gameScript');
+    let d = document.createElement('div');
+    d.textContent = script;
+    container.appendChild(d);
+}
+
 function sayWin(winnerSelection, loserSelection) {
     return `You Win! ${winnerSelection} beats ${loserSelection}!`;
 }
@@ -108,7 +138,7 @@ function sayLose(winnerSelection, loserSelection) {
 }
 
 function sayDraw(selection) {
-    return `Your drew! You both played ${selection}`;
+    return `Your drew! You both played ${selection}.`;
 }
 
 function sayInvalidSelection() {

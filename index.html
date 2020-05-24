@@ -6,8 +6,19 @@
     <title>Rock Paper Scissors</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
-<body>
-    <button id="play" onclick="playGame(window.prompt('Please enter number of rounds', 0))">Play</button>
+<body id="body">
+    <div id="selectionMenu">
+        <div>Please choose what to play from the dropdown menu</div>
+        <select name="item" id="itemSelect" required=true>
+            <option id="Rock">Rock</option>
+            <option id="Paper">Paper</option>
+            <option id="Scissors">Scissors</option>
+        </select>
+        <button id="playBtn">Play</button>
+    </div>
+
+    <div id="gameScript"></div>
+
     <script src="scripts/main.js"></script>
 </body>
 </html>
